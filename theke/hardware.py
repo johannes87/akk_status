@@ -1,16 +1,30 @@
 # TODO: was passiert wenn knopf nicht lang genug gedrueckt wird?
 
 import RPi.GPIO as GPIO
+from neopixel import *
 
 class RgbLed:
-    PIN = 18
+    LED_COUNT      = 1       # Number of LED pixels.
+    LED_PIN        = 18      # GPIO pin connected to the pixels (must support PWM!).
+    LED_FREQ_HZ    = 800000  # LED signal frequency in hertz (usually 800khz)
+    LED_DMA        = 5       # DMA channel to use for generating signal (try 5)
+    LED_BRIGHTNESS = 70     # Set to 0 for darkest and 255 for brightest
+    LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 
     def __init__(self):
-        pass
+        self.strip = Adafruit_NeoPixel(
+                RgbLed.LED_COUNT, 
+                RgbLed.LED_PIN, 
+                RgbLed.LED_FREQ_HZ, 
+                RgbLed.LED_DMA, 
+                RgbLed.LED_INVERT, 
+                RgbLed.LED_BRIGHTNESS)
+        self.strip.begin()
     
     def set_color(self, color):
         # TODO: tweening between current color and new color
-        pass
+        self.strip.setPixelColor(0, color)
+        self.strip.show()
 
 
 class Button:
@@ -45,6 +59,8 @@ class AKKClosedButton(Button):
 
     def _handle(self):
         print("akk zu")
+        red = Color(255, 0, 0)
+        self.rgb_led.set_color(red)
 
 
 class AKKOpenNoServiceButton(Button):
@@ -55,6 +71,8 @@ class AKKOpenNoServiceButton(Button):
 
     def _handle(self):
         print("kein service")
+        orange = Color(255, 128, 0)
+        self.rgb_led.set_color(orange)
 
 
 class AKKOpenSelfServiceButton(Button):
@@ -65,6 +83,8 @@ class AKKOpenSelfServiceButton(Button):
 
     def _handle(self):
         print("cafe selbergrosz")
+        yellow = Color(255, 255, 0)
+        self.rgb_led.set_color(yellow)
 
 
 class AKKOpenFullServiceButton(Button):
@@ -75,3 +95,5 @@ class AKKOpenFullServiceButton(Button):
 
     def _handle(self):
         print("thekenbetrieb")
+        green = Color(0, 255, 0)
+        self.rgb_led.set_color(green)
