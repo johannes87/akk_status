@@ -43,9 +43,6 @@ class AKKClosedButton(Button):
     """
     PIN = 14
 
-    def __init__(self, rgb_led):
-        super().__init__(rgb_led)
-
     def _handle(self):
         print("akk zu")
 
@@ -55,9 +52,6 @@ class AKKOpenNoServiceButton(Button):
     Button for setting the state to: AKK is open, but no service at all
     """
     PIN = 15
-
-    def __init__(self, rgb_led):
-        super().__init__(rgb_led)
 
     def _handle(self):
         print("kein service")
@@ -69,9 +63,6 @@ class AKKOpenSelfServiceButton(Button):
     """
     PIN = 23
 
-    def __init__(self, rgb_led):
-        super().__init__(rgb_led)
-
     def _handle(self):
         print("cafe selbergrosz")
 
@@ -81,9 +72,6 @@ class AKKOpenFullServiceButton(Button):
     Button for setting the state to: AKK is selling stuff at the counter
     """
     PIN = 24
-
-    def __init__(self, rgb_led):
-        super().__init__(rgb_led)
 
     def _handle(self):
         print("thekenbetrieb")
