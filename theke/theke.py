@@ -5,9 +5,11 @@ import threading
 import sys
 import time
 
-from hardware import *
+import hardware
+import state
 
 BUTTON_DELAY = 0.2
+
 
 class MyTCPHandler(socketserver.StreamRequestHandler):
     def handle(self):
@@ -22,13 +24,13 @@ class ThreadingTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
 
 if __name__ == "__main__":
-    Button.init_hardware()
-    rgb_led = RgbLed()
+    hardware.init()
+    rgb_led = hardware.RgbLed()
     buttons = [
-            AKKClosedButton(rgb_led),
-            AKKOpenNoServiceButton(rgb_led),
-            AKKOpenSelfServiceButton(rgb_led),
-            AKKOpenFullServiceButton(rgb_led)
+            hardware.AKKClosedButton(rgb_led),
+            hardware.AKKOpenNoServiceButton(rgb_led),
+            hardware.AKKOpenSelfServiceButton(rgb_led),
+            hardware.AKKOpenFullServiceButton(rgb_led)
             ]
 
     while True:

@@ -28,13 +28,6 @@ class RgbLed:
 
 
 class Button:
-    @staticmethod
-    def init_hardware():
-        """
-        Global hardware initialization for all button-related functionality
-        """
-        GPIO.setmode(GPIO.BCM)
-
     def __init__(self, rgb_led):
         GPIO.setup(self.__class__.PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
         self.prev_pin_input = None
@@ -97,3 +90,9 @@ class AKKOpenFullServiceButton(Button):
         print("thekenbetrieb")
         green = Color(0, 255, 0)
         self.rgb_led.set_color(green)
+
+def init():
+    """
+    Global hardware initialization for all button-related functionality
+    """
+    GPIO.setmode(GPIO.BCM)
