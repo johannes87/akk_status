@@ -9,11 +9,11 @@ class AKKState(Enum):
 
 class State:
     def __init__(self):
-        self._state = None
+        self._state_value = None
 
-    def set_state(self, state):
-        self._state = state
+    def set_state_value(self, state_value):
+        self._state_value = state_value
     
-    def get_state(self):
-        return self._state
+    def get_state_value(self):
+        return self._state_value
 
