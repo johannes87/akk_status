@@ -1,3 +1,7 @@
+# TODO: was passiert wenn knopf nicht lang genug gedrueckt wird?
+
+import RPi.GPIO as GPIO
+
 class RgbLed:
     PIN = 18
 
@@ -15,19 +19,22 @@ class Button:
         """
         Global hardware initialization for all button-related functionality
         """
-        pass
+        GPIO.setmode(GPIO.BCM)
 
     def __init__(self, rgb_led):
-        self.prev_value = None
-        self.cur_value = None
+        GPIO.setup(self.__class__.PIN, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        self.prev_pin_input = None
         self.rgb_led = rgb_led
 
     def check(self):
-        # use self.__class.PIN
-        # compare if new value is different from old value, and 1->0 (depending on pup/down)
-        # if changed, call _handle
-        pass
-
+        pin_input = GPIO.input(self.__class__.PIN)
+        
+        if self.prev_pin_input is not None \
+                and self.prev_pin_input == 1\
+                and pin_input == 0:
+            self._handle()
+        
+        self.prev_pin_input = pin_input
 
 
 class AKKClosedButton(Button):
@@ -36,11 +43,11 @@ class AKKClosedButton(Button):
     """
     PIN = 14
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, rgb_led):
+        super().__init__(rgb_led)
 
     def _handle(self):
-        pass
+        print("akk zu")
 
 
 class AKKOpenNoServiceButton(Button):
@@ -49,8 +56,11 @@ class AKKOpenNoServiceButton(Button):
     """
     PIN = 15
 
+    def __init__(self, rgb_led):
+        super().__init__(rgb_led)
+
     def _handle(self):
-        pass
+        print("kein service")
 
 
 class AKKOpenSelfServiceButton(Button):
@@ -59,8 +69,11 @@ class AKKOpenSelfServiceButton(Button):
     """
     PIN = 23
 
+    def __init__(self, rgb_led):
+        super().__init__(rgb_led)
+
     def _handle(self):
-        pass
+        print("cafe selbergrosz")
 
 
 class AKKOpenFullServiceButton(Button):
@@ -69,5 +82,8 @@ class AKKOpenFullServiceButton(Button):
     """
     PIN = 24
 
-    def __handle(self):
-        pass
+    def __init__(self, rgb_led):
+        super().__init__(rgb_led)
+
+    def _handle(self):
+        print("thekenbetrieb")
