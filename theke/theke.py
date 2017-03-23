@@ -26,32 +26,35 @@ class ThreadingTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
 if __name__ == "__main__":
     hardware.init()
     rgb_led = hardware.RgbLed()
+    state = state.State()
     buttons = [
-            hardware.AKKClosedButton(rgb_led),
-            hardware.AKKOpenNoServiceButton(rgb_led),
-            hardware.AKKOpenSelfServiceButton(rgb_led),
-            hardware.AKKOpenFullServiceButton(rgb_led)
+            hardware.AKKClosedButton(rgb_led, state),
+            hardware.AKKOpenNoServiceButton(rgb_led, state),
+            hardware.AKKOpenSelfServiceButton(rgb_led, state),
+            hardware.AKKOpenFullServiceButton(rgb_led, state)
             ]
 
     while True:
         for button in buttons:
             button.check()
+
+        print('state=', state.get_state())
         time.sleep(BUTTON_DELAY)
 
 
 
-    # HOST, PORT = "localhost", 9999
-    # socketserver.TCPServer.allow_reuse_address = True
-
-    # # Create the server, binding to localhost on port 9999
-    # with ThreadingTCPServer((HOST, PORT), MyTCPHandler) as server:
-    #     server_thread = threading.Thread(target=server.serve_forever)
-    #     # Exit the server thread when the main thread terminates
-    #     server_thread.daemon = True
-    #     server_thread.start()
-
-    #     sys.stdin.readline() 
-
-    #     server.shutdown()
+#    HOST, PORT = "localhost", 9999
+#    socketserver.TCPServer.allow_reuse_address = True
+#
+#    # Create the server, binding to localhost on port 9999
+#    with ThreadingTCPServer((HOST, PORT), MyTCPHandler) as server:
+#        server_thread = threading.Thread(target=server.serve_forever)
+#        # Exit the server thread when the main thread terminates
+#        server_thread.daemon = True
+#        server_thread.start()
+#
+#        sys.stdin.readline() 
+#
+#        server.shutdown()
 
 
