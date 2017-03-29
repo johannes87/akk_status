@@ -13,6 +13,7 @@ class CurrentAKKState:
 
     def set_state(self, state):
         self._state = state
+        print("State set to {}".format(self._state))
     
     def get_state(self):
         return self._state
