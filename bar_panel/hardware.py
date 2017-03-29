@@ -54,7 +54,6 @@ class AKKClosedButton(Button):
     PIN = 14
 
     def _handle(self):
-        print("akk zu")
         red = Color(255, 0, 0)
         self.rgb_led.set_color(red)
         self.state.set_state(state.AKKState.CLOSED)
@@ -67,7 +66,6 @@ class AKKOpenNoServiceButton(Button):
     PIN = 15
 
     def _handle(self):
-        print("kein service")
         orange = Color(255, 128, 0)
         self.rgb_led.set_color(orange)
         self.state.set_state(state.AKKState.OPEN_NO_SERVICE)
@@ -80,7 +78,6 @@ class AKKOpenSelfServiceButton(Button):
     PIN = 23
 
     def _handle(self):
-        print("cafe selbergrosz")
         yellow = Color(255, 255, 0)
         self.rgb_led.set_color(yellow)
         self.state.set_state(state.AKKState.OPEN_SELF_SERVICE)
@@ -93,7 +90,6 @@ class AKKOpenFullServiceButton(Button):
     PIN = 24
 
     def _handle(self):
-        print("thekenbetrieb")
         green = Color(0, 255, 0)
         self.rgb_led.set_color(green)
         self.state.set_state(state.AKKState.OPEN_FULL_SERVICE)
