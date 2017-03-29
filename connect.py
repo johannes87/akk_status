@@ -24,14 +24,13 @@ if __name__ == '__main__':
                 time.sleep(RECONNECT_DELAY)
                 continue
 
-            sockfile = sock.makefile()
-
-            while True:
-                akk_state_str = sockfile.readline().strip()
-                if akk_state_str == '':
-                    break
-                akk_state = AKKState[akk_state_str]
-                update_state(akk_state)
+            with sock.makefile() as sockfile:
+                while True:
+                    akk_state_str = sockfile.readline().strip()
+                    if akk_state_str == '':
+                        break
+                    akk_state = AKKState[akk_state_str]
+                    update_state(akk_state)
 
             print("Connection lost, retrying after {} seconds".format(RECONNECT_DELAY))
             time.sleep(RECONNECT_DELAY)
