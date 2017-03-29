@@ -1,0 +1,16 @@
+[Unit]
+Description=Bar panel software for AKK-status
+After=syslog.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment=PYTHONUNBUFFERED=1
+WorkingDirectory=/home/pi/akk_status/
+ExecStart=/home/pi/akk_status/bar.py
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=multi-user.target
