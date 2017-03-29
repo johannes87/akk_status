@@ -2,7 +2,7 @@ import socketserver
 import threading
 import time
 
-HOST = "localhost"
+HOST = "0.0.0.0"
 PORT = 9999
 
 class StateTCPHandler(socketserver.StreamRequestHandler):
