@@ -19,6 +19,10 @@ if __name__ == "__main__":
             hardware.AKKOpenFullServiceButton(rgb_led, akk_state)
             ]
     server = networking.init(akk_state)
+    
+    # trigger closed-button event on start (default state)
+    # TODO: rainbow colors when no state is set, to notify user that PI has rebooted and no state is set
+    buttons[0]._handle()
 
     while True:
         for button in buttons:
