@@ -7,13 +7,13 @@ class AKKState(Enum):
     OPEN_FULL_SERVICE = 4
 
 
-class State:
+class CurrentAKKState:
     def __init__(self):
-        self._state_value = None
+        self._state = None
 
-    def set_state_value(self, state_value):
-        self._state_value = state_value
+    def set_state(self, state):
+        self._state = state
     
-    def get_state_value(self):
-        return self._state_value
+    def get_state(self):
+        return self._state
 
