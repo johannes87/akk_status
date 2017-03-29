@@ -3,7 +3,7 @@
 import RPi.GPIO as GPIO
 from neopixel import *
 
-from state import AKKState
+import state
 
 class RgbLed:
     LED_COUNT      = 1       # Number of LED pixels.
@@ -57,7 +57,7 @@ class AKKClosedButton(Button):
         print("akk zu")
         red = Color(255, 0, 0)
         self.rgb_led.set_color(red)
-        self.state.set_state(AKKState.CLOSED)
+        self.state.set_state(state.AKKState.CLOSED)
 
 
 class AKKOpenNoServiceButton(Button):
@@ -70,7 +70,7 @@ class AKKOpenNoServiceButton(Button):
         print("kein service")
         orange = Color(255, 128, 0)
         self.rgb_led.set_color(orange)
-        self.state.set_state(AKKState.OPEN_NO_SERVICE)
+        self.state.set_state(state.AKKState.OPEN_NO_SERVICE)
 
 
 class AKKOpenSelfServiceButton(Button):
@@ -83,7 +83,7 @@ class AKKOpenSelfServiceButton(Button):
         print("cafe selbergrosz")
         yellow = Color(255, 255, 0)
         self.rgb_led.set_color(yellow)
-        self.state.set_state(AKKState.OPEN_SELF_SERVICE)
+        self.state.set_state(state.AKKState.OPEN_SELF_SERVICE)
 
 
 class AKKOpenFullServiceButton(Button):
@@ -96,7 +96,7 @@ class AKKOpenFullServiceButton(Button):
         print("thekenbetrieb")
         green = Color(0, 255, 0)
         self.rgb_led.set_color(green)
-        self.state.set_state(AKKState.OPEN_FULL_SERVICE)
+        self.state.set_state(state.AKKState.OPEN_FULL_SERVICE)
 
 
 def init():

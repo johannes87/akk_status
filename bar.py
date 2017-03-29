@@ -2,9 +2,9 @@
 
 import time
 
-import hardware
+import bar_panel.hardware as hardware
+import bar_panel.networking as networking
 import state
-import networking
 
 BUTTON_DELAY = 0.2
 
