@@ -18,7 +18,9 @@ class RgbLed:
 
     def __init__(self):
         self.current_color = None
-        self.transition_color = None # XXX: using abstract data types in python?
+        # XXX: using abstract data types in python possible? 
+        # (put transition_color in Animation?)
+        self.transition_color = None         
         self.current_animation = None
 
         self.strip = neopixel.Adafruit_NeoPixel(
@@ -33,39 +35,42 @@ class RgbLed:
         # set default color
         self.set_color(color.red)
     
-    def set_color(self, color):
-        self.strip.setPixelColor(0, color.neopixel)
+    def set_color(self, new_color):
+        self.strip.setPixelColor(0, new_color.neopixel)
         self.strip.show()
-        self.current_color = color
+        self.current_color = new_color
 
     def animate_color_transition(self, transition_color):
         self.current_animation = self.Animation.COLOR_TRANSITION
         self.transition_color = transition_color
 
     def animate_no_state(self):
-        self.current_animation = self.Animation.RAINBOW
+        self.current_animation = self.Animation.NO_STATE
 
     def animate(self):
         def _animate_color_transition():
-            print("_animate_state_transition")
+            # TODO animation here
+            self.set_color(self.transition_color)
+            self.current_animation = None
 
         def _animate_no_state():
             # rainbow animation
-            print("_animate_rainbow")
-            new_color = copy.copy(self.current_color)
+            new_color = color.HSVColor(
+                    (self.current_color.hue + 0.005) % 1, 
+                    self.current_color.saturation,
+                    self.current_color.value)
             
-
+            self.set_color(new_color)
 
         if self.current_animation is None:
             return
-
-        if self.current_animation == self.Animation.RAINBOW:
+        if self.current_animation == self.Animation.NO_STATE:
             _animate_no_state()
         if self.current_animation == self.Animation.COLOR_TRANSITION:
             _animate_color_transition()
 
     class Animation(Enum):
-        RAINBOW = 1
+        NO_STATE = 1
         COLOR_TRANSITION = 2
 
 class Button:
@@ -93,7 +98,7 @@ class AKKClosedButton(Button):
     PIN = 14
 
     def _handle(self):
-        self.rgb_led.set_color(color.red)
+        self.rgb_led.animate_color_transition(color.red)
         self.state.set_state(state.AKKState.CLOSED)
 
 
@@ -104,9 +109,7 @@ class AKKOpenNoServiceButton(Button):
     PIN = 15
 
     def _handle(self):
-        self.rgb_led.set_color(color.orange)
-        self.rgb_led.animate_color_transition(color.orange) 
-        # TODO change from set_color to animate_color_transition in every _handle function
+        self.rgb_led.animate_color_transition(color.orange)
         self.state.set_state(state.AKKState.OPEN_NO_SERVICE)
 
 
@@ -117,7 +120,7 @@ class AKKOpenSelfServiceButton(Button):
     PIN = 23
 
     def _handle(self):
-        self.rgb_led.set_color(color.yellow)
+        self.rgb_led.animate_color_transition(color.yellow)
         self.state.set_state(state.AKKState.OPEN_SELF_SERVICE)
 
 
@@ -128,7 +131,7 @@ class AKKOpenFullServiceButton(Button):
     PIN = 24
 
     def _handle(self):
-        self.rgb_led.set_color(color.green)
+        self.rgb_led.animate_color_transition(color.green)
         self.state.set_state(state.AKKState.OPEN_FULL_SERVICE)
 
 
