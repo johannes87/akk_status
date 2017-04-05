@@ -49,9 +49,33 @@ class RgbLed:
 
     def animate(self):
         def _animate_color_transition():
-            # TODO animation here
-            self.set_color(self.transition_color)
-            self.current_animation = None
+            CREMENT = 0.001
+            DIFF_THRESHOLD = 0.002
+
+            do_increment = (self.transition_color.hue - self.current_color.hue) > 0
+
+            # print("_animate_color_transition: cur={}, tc={}, diff={}".format(
+            #     self.current_color.hue,
+            #     self.transition_color.hue,
+            #     self.transition_color.hue - self.current_color.hue))
+
+            if do_increment:
+                self.set_color(color.HSVColor(
+                    (self.current_color.hue + CREMENT) % 1,
+                    self.current_color.saturation,
+                    self.current_color.value))
+            else:
+                self.set_color(color.HSVColor(
+                    (self.current_color.hue - CREMENT) % 1,
+                    self.current_color.saturation,
+                    self.current_color.value))
+
+            do_stop = abs(self.transition_color.hue - self.current_color.hue) \
+                    < DIFF_THRESHOLD
+
+            if do_stop:
+                self.current_animation = None
+
 
         def _animate_no_state():
             # rainbow animation
