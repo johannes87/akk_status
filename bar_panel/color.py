@@ -1,6 +1,7 @@
 import neopixel
 import colorsys
 
+
 # TODO make class abstract
 class Color:
     def __init__(self):
@@ -17,6 +18,9 @@ class RGBColor(Color):
         self.red = red
         self.green = green
         self.blue = blue
+
+        (self.hue, self.saturation, self.value) = colorsys.rgb_to_hsv(
+                self.red, self.green, self.blue)
 
         self.to_neopixel()
 
