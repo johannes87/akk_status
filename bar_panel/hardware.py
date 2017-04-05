@@ -1,8 +1,9 @@
 # TODO: was passiert wenn knopf nicht lang genug gedrueckt wird?
 
 import RPi.GPIO as GPIO
-from neopixel import *
+import neopixel
 
+import bar_panel.color as color
 import state
 
 class RgbLed:
@@ -14,7 +15,7 @@ class RgbLed:
     LED_INVERT     = False   # True to invert the signal (when using NPN transistor level shift)
 
     def __init__(self):
-        self.strip = Adafruit_NeoPixel(
+        self.strip = neopixel.Adafruit_NeoPixel(
                 RgbLed.LED_COUNT, 
                 RgbLed.LED_PIN, 
                 RgbLed.LED_FREQ_HZ, 
@@ -25,7 +26,7 @@ class RgbLed:
     
     def set_color(self, color):
         # TODO: tweening between current color and new color
-        self.strip.setPixelColor(0, color)
+        self.strip.setPixelColor(0, color.neopixel)
         self.strip.show()
 
 
@@ -54,8 +55,7 @@ class AKKClosedButton(Button):
     PIN = 14
 
     def _handle(self):
-        red = Color(255, 0, 0)
-        self.rgb_led.set_color(red)
+        self.rgb_led.set_color(color.red)
         self.state.set_state(state.AKKState.CLOSED)
 
 
@@ -66,8 +66,7 @@ class AKKOpenNoServiceButton(Button):
     PIN = 15
 
     def _handle(self):
-        orange = Color(255, 128, 0)
-        self.rgb_led.set_color(orange)
+        self.rgb_led.set_color(color.orange)
         self.state.set_state(state.AKKState.OPEN_NO_SERVICE)
 
 
@@ -78,8 +77,7 @@ class AKKOpenSelfServiceButton(Button):
     PIN = 23
 
     def _handle(self):
-        yellow = Color(255, 255, 0)
-        self.rgb_led.set_color(yellow)
+        self.rgb_led.set_color(color.yellow)
         self.state.set_state(state.AKKState.OPEN_SELF_SERVICE)
 
 
@@ -90,8 +88,7 @@ class AKKOpenFullServiceButton(Button):
     PIN = 24
 
     def _handle(self):
-        green = Color(0, 255, 0)
-        self.rgb_led.set_color(green)
+        self.rgb_led.set_color(color.green)
         self.state.set_state(state.AKKState.OPEN_FULL_SERVICE)
 
 
