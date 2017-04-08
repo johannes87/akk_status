@@ -18,9 +18,11 @@ class RgbLed:
 
     def __init__(self):
         self.current_color = None
-        # XXX: using abstract data types in python possible? 
-        # (put transition_color in Animation?)
-        self.transition_color = None         
+
+        self.transition_from_color = None
+        self.transition_to_color = None
+        self.transition_alpha = 0
+
         self.current_animation = None
 
         self.strip = neopixel.Adafruit_NeoPixel(
@@ -40,42 +42,33 @@ class RgbLed:
         self.strip.show()
         self.current_color = new_color
 
-    def animate_color_transition(self, transition_color):
+    def animate_color_transition(self, new_color):
         self.current_animation = self.Animation.COLOR_TRANSITION
-        self.transition_color = transition_color
+        self.transition_from_color = self.current_color
+        self.transition_to_color = new_color
+        self.transition_alpha = 0
 
     def animate_no_state(self):
         self.current_animation = self.Animation.NO_STATE
 
     def animate(self):
         def _animate_color_transition():
-            CREMENT = 0.001
-            DIFF_THRESHOLD = 0.002
+            ALPHA_INCREMENT = 0.03
 
-            do_increment = (self.transition_color.hue - self.current_color.hue) > 0
+            alpha = self.transition_alpha
+            color_from = self.transition_from_color
+            color_to = self.transition_to_color
 
-            # print("_animate_color_transition: cur={}, tc={}, diff={}".format(
-            #     self.current_color.hue,
-            #     self.transition_color.hue,
-            #     self.transition_color.hue - self.current_color.hue))
+            blended_color = color.RGBColor(
+                color_from.red * (1 - alpha) + color_to.red * alpha,
+                color_from.green * (1 - alpha) + color_to.green * alpha,
+                color_from.blue * (1 - alpha) + color_to.blue * alpha)
 
-            if do_increment:
-                self.set_color(color.HSVColor(
-                    (self.current_color.hue + CREMENT) % 1,
-                    self.current_color.saturation,
-                    self.current_color.value))
-            else:
-                self.set_color(color.HSVColor(
-                    (self.current_color.hue - CREMENT) % 1,
-                    self.current_color.saturation,
-                    self.current_color.value))
+            self.set_color(blended_color)
+            self.transition_alpha += ALPHA_INCREMENT
 
-            do_stop = abs(self.transition_color.hue - self.current_color.hue) \
-                    < DIFF_THRESHOLD
-
-            if do_stop:
+            if self.transition_alpha >= 1:
                 self.current_animation = None
-
 
         def _animate_no_state():
             # rainbow animation
@@ -119,7 +112,7 @@ class AKKClosedButton(Button):
     """
     Button for setting the state to: AKK is closed (no entry)
     """
-    PIN = 14
+    PIN = 15
 
     def _handle(self):
         self.rgb_led.animate_color_transition(color.red)
@@ -130,10 +123,10 @@ class AKKOpenNoServiceButton(Button):
     """
     Button for setting the state to: AKK is open, but no service at all
     """
-    PIN = 15
+    PIN = 23
 
     def _handle(self):
-        self.rgb_led.animate_color_transition(color.orange)
+        self.rgb_led.animate_color_transition(color.yellow)
         self.state.set_state(state.AKKState.OPEN_NO_SERVICE)
 
 
@@ -141,10 +134,10 @@ class AKKOpenSelfServiceButton(Button):
     """
     Button for setting the state to: Self service ("Cafe Selbergroß")
     """
-    PIN = 23
+    PIN = 24
 
     def _handle(self):
-        self.rgb_led.animate_color_transition(color.yellow)
+        self.rgb_led.animate_color_transition(color.blue)
         self.state.set_state(state.AKKState.OPEN_SELF_SERVICE)
 
 
@@ -152,12 +145,11 @@ class AKKOpenFullServiceButton(Button):
     """
     Button for setting the state to: AKK is selling stuff at the counter
     """
-    PIN = 24
+    PIN = 14
 
     def _handle(self):
-        self.rgb_led.animate_color_transition(color.green)
+        self.rgb_led.animate_color_transition(color.purple)
         self.state.set_state(state.AKKState.OPEN_FULL_SERVICE)
-
 
 def init():
     """
