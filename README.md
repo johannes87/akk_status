@@ -8,6 +8,8 @@
 * $ git clone CLONE\_URL $HOME/akk\_status; cd akk\_status # code is
   expected in /home/pi/akk\_status
 * $ cp systemd/bar\_panel.service /etc/systemd/system/
+* $ cp example\_net.ini net.ini
+* Modify net.ini if necessary
 * $ sudo systemctl enable bar\_panel.service
 * $ sudo reboot
 
