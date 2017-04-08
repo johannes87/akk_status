@@ -119,7 +119,7 @@ class AKKClosedButton(Button):
     """
     Button for setting the state to: AKK is closed (no entry)
     """
-    PIN = 14
+    PIN = 15
 
     def _handle(self):
         self.rgb_led.animate_color_transition(color.red)
@@ -130,10 +130,10 @@ class AKKOpenNoServiceButton(Button):
     """
     Button for setting the state to: AKK is open, but no service at all
     """
-    PIN = 15
+    PIN = 23
 
     def _handle(self):
-        self.rgb_led.animate_color_transition(color.orange)
+        self.rgb_led.animate_color_transition(color.yellow)
         self.state.set_state(state.AKKState.OPEN_NO_SERVICE)
 
 
@@ -141,10 +141,10 @@ class AKKOpenSelfServiceButton(Button):
     """
     Button for setting the state to: Self service ("Cafe Selbergroß")
     """
-    PIN = 23
+    PIN = 24
 
     def _handle(self):
-        self.rgb_led.animate_color_transition(color.yellow)
+        self.rgb_led.animate_color_transition(color.blue)
         self.state.set_state(state.AKKState.OPEN_SELF_SERVICE)
 
 
@@ -152,12 +152,11 @@ class AKKOpenFullServiceButton(Button):
     """
     Button for setting the state to: AKK is selling stuff at the counter
     """
-    PIN = 24
+    PIN = 14
 
     def _handle(self):
-        self.rgb_led.animate_color_transition(color.green)
+        self.rgb_led.animate_color_transition(color.purple)
         self.state.set_state(state.AKKState.OPEN_FULL_SERVICE)
-
 
 def init():
     """

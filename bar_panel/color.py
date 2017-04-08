@@ -41,8 +41,9 @@ class HSVColor(Color):
     def __init__(self, hue, saturation, value):
         self.set_hsv(hue, saturation, value)
 
-        
 red = RGBColor(255, 0, 0)
 green = RGBColor(0, 255, 0)
+blue = RGBColor(0, 0, 255)
 orange = RGBColor(255, 128, 0)
 yellow = RGBColor(255, 255, 0)
+purple = RGBColor(128, 0, 128)
