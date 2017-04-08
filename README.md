@@ -1,4 +1,11 @@
 
+# Components
+
+* bar.py, running on the Raspberry PI; bar.py opens a TCP port
+  (configured in net.ini)
+* connect.py, connecting to the port opened by bar.py. connect.py tries
+  to ensure that a connection to bar.py is always established.
+
 # Setting up the Raspberry PI
 
 * mount the /boot partition of the SD card and create the empty file
