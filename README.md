@@ -1,3 +1,6 @@
+This project's goal is to publish the status of the student café AKK in
+Karlsruhe online. There are four states defined (closed, closed with no
+service, closed with self service, closed with full service).
 
 # Components
 
@@ -24,3 +27,8 @@ After rebooting, everything should be up and running. The daemon should
 be listening in TCP socket 9999.
 
 Tested on Raspbian, version 2017-03-02-raspbian-jessie-lite
+
+# Special thanks go out to...
+
+* Lukas 'Morbi' Mohrbacher (http://github.com/morbidick)
+* Robin Freyler (https://github.com/Robbepop)
