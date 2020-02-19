@@ -2,6 +2,13 @@ This project's goal is to publish the status of the student café AKK in
 Karlsruhe online. There are four states defined (closed, closed with no
 service, closed with self service, closed with full service).
 
+
+# Hardware
+
+A wooden box containing a Raspberry PI has been built to set and display the opening status:
+
+[![Setting opening status for student café (prototype)](http://img.youtube.com/vi/k8hdYwPYwqs/0.jpg)](http://www.youtube.com/watch?v=k8hdYwPYwqs "Setting opening status for student café (prototype)")
+
 # Components
 
 * bar.py, running on the Raspberry PI; bar.py opens a TCP port
